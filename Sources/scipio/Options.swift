@@ -45,6 +45,10 @@ struct BuildOptionGroup: ParsableArguments {
     @Flag(name: [.customShort("f", allowingJoined: false), .long],
           help: "Whether overwrite generated frameworks or not")
     var overwrite: Bool = false
+
+    @Option(name: [.customLong("skipped-package-list")],
+            help: "The package list that should not be skipped.")
+    var skippedPackageList: [String] = []
 }
 
 extension FrameworkType: ExpressibleByArgument { }

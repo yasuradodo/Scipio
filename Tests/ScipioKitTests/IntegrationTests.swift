@@ -110,7 +110,8 @@ final class IntegrationTests: XCTestCase {
                 shouldOnlyUseVersionsFromResolvedFile: true,
                 cacheMode: .disabled,
                 overwrite: true,
-                verbose: false
+                verbose: false, 
+                skippedPackageList: []
             )
         )
         let outputDir = fileManager.temporaryDirectory

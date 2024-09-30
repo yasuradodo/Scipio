@@ -53,7 +53,8 @@ extension Runner {
             shouldOnlyUseVersionsFromResolvedFile: buildOptions.shouldOnlyUseVersionsFromResolvedFile,
             cacheMode: Self.cacheMode(from: commandType),
             overwrite: buildOptions.overwrite,
-            verbose: globalOptions.verbose
+            verbose: globalOptions.verbose, 
+            skippedPackageList: buildOptions.skippedPackageList
         )
         self.init(mode: commandType.mode, options: runnerOptions)
     }

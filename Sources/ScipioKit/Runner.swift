@@ -102,7 +102,8 @@ public struct Runner {
             buildOptions: buildOptions,
             buildOptionsMatrix: buildOptionsMatrix,
             cacheMode: options.cacheMode,
-            overwrite: options.overwrite,
+            overwrite: options.overwrite, 
+            skippedPackageList: options.skippedPackageList,
             outputDir: outputDir
         )
         do {
@@ -235,6 +236,7 @@ extension Runner {
         public var overwrite: Bool
         public var verbose: Bool
         public var toolchainEnvironment: [String: String]?
+        public var skippedPackageList: [String]
 
         public init(
             baseBuildOptions: BuildOptions = .init(),
@@ -243,7 +245,8 @@ extension Runner {
             cacheMode: CacheMode = .project,
             overwrite: Bool = false,
             verbose: Bool = false,
-            toolchainEnvironment: [String: String]? = nil
+            toolchainEnvironment: [String: String]? = nil,
+            skippedPackageList: [String] = []
         ) {
             self.buildOptionsContainer = BuildOptionsContainer(
                 baseBuildOptions: baseBuildOptions,
@@ -254,6 +257,7 @@ extension Runner {
             self.overwrite = overwrite
             self.verbose = verbose
             self.toolchainEnvironment = toolchainEnvironment
+            self.skippedPackageList = skippedPackageList
         }
     }
 }

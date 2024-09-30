@@ -15,6 +15,7 @@ struct FrameworkProducer {
     private let outputDir: URL
     private let fileSystem: any FileSystem
     private let toolchainEnvironment: [String: String]?
+    private let skippedPackageList: [String]
 
     private var cacheStorage: (any CacheStorage)? {
         switch cacheMode {
@@ -51,6 +52,7 @@ struct FrameworkProducer {
         buildOptionsMatrix: [String: BuildOptions],
         cacheMode: Runner.Options.CacheMode,
         overwrite: Bool,
+        skippedPackageList: [String],
         outputDir: URL,
         toolchainEnvironment: [String: String]? = nil,
         fileSystem: any FileSystem = localFileSystem
@@ -61,6 +63,7 @@ struct FrameworkProducer {
         self.cacheMode = cacheMode
         self.overwrite = overwrite
         self.outputDir = outputDir
+        self.skippedPackageList = skippedPackageList
         self.toolchainEnvironment = toolchainEnvironment
         self.fileSystem = fileSystem
     }
@@ -96,6 +99,11 @@ struct FrameworkProducer {
         let allTargets = OrderedSet(buildProducts.compactMap { buildProduct -> CacheSystem.CacheTarget? in
             guard [.library, .binary].contains(buildProduct.target.type) else {
                 assertionFailure("Invalid target type")
+                return nil
+            }
+            let packageId = buildProduct.package.identity.description
+            if !packageId.isEmpty && skippedPackageList.contains(packageId) {
+                logger.info("Target \(buildProduct.target.name) in \(packageId) will be skipped")
                 return nil
             }
             let buildOptionsForProduct = overriddenBuildOption(for: buildProduct)
