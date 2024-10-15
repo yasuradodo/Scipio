@@ -106,6 +106,7 @@ struct FrameworkProducer {
                 logger.info("Target \(buildProduct.target.name) in \(packageId) will be skipped")
                 return nil
             }
+            logger.info("Target \(buildProduct.target.name) in \(packageId) will be built")
             let buildOptionsForProduct = overriddenBuildOption(for: buildProduct)
             return CacheSystem.CacheTarget(
                 buildProduct: buildProduct,
